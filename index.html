@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Red Dead Redemption 2 Guide</title>
+<style>
+:root{--bg:#1a1410;--panel:#2a2019;--panel2:#33271e;--ink:#f1e6d0;--muted:#c2b196;--line:#5a4532;--red:#b3261e;--red2:#d9473c;--gold:#d8a650;--done:#5f8a4a}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg) radial-gradient(ellipse at top,#2c2118 0%,#1a1410 70%) fixed;color:var(--ink);font:16px/1.5 Georgia,"Times New Roman",serif}
+header{text-align:center;padding:28px 16px 12px;border-bottom:3px double var(--line)}
+h1{margin:0;font-size:clamp(1.7rem,5vw,2.8rem);letter-spacing:.06em;text-transform:uppercase;color:var(--ink);text-shadow:0 2px 0 var(--red)}
+header p{margin:6px 0 0;color:var(--muted);font-style:italic}
+.progress{max-width:1100px;margin:14px auto 0;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center}
+.bar{flex:1 1 220px;max-width:420px;height:14px;background:var(--panel);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.bar>div{height:100%;background:linear-gradient(90deg,var(--red),var(--gold));width:0;transition:width .3s}
+#progText{color:var(--gold);font-weight:bold}
+nav{position:sticky;top:0;z-index:5;background:#140f0bee;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;justify-content:center;gap:4px;padding:8px}
+nav button,.chip,.btn{font:inherit;cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:7px 12px;border-radius:6px}
+nav button[aria-selected=true],.chip.on{background:var(--red);border-color:var(--red2);color:#fff}
+.btn.reset{background:transparent;color:var(--red2);border-color:var(--red)}
+main{max-width:1100px;margin:0 auto;padding:18px 14px 60px}
+section.tab{display:none}section.tab.active{display:block}
+h2{font-size:1.6rem;margin:6px 0 12px;color:var(--gold);border-bottom:1px solid var(--line);padding-bottom:6px}
+h3{color:var(--gold);margin:0 0 8px;font-size:1.15rem}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;align-items:center}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+input[type=search]{font:inherit;flex:1 1 220px;min-width:0;padding:8px 12px;border-radius:6px;border:1px solid var(--line);background:#0f0b08;color:var(--ink)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-left:4px solid var(--red);border-radius:8px;padding:12px 14px}
+.card.found{border-left-color:var(--done);opacity:.72}
+.card .top{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.card h4{margin:0;font-size:1.1rem}
+.tag{display:inline-block;font-size:.78rem;color:var(--gold);border:1px solid var(--line);border-radius:10px;padding:1px 8px;margin-top:3px}
+.card dl{margin:8px 0 0}.card dt{font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-top:6px}.card dd{margin:0}
+label.found-cb{white-space:nowrap;font-size:.85rem;color:var(--muted);display:flex;gap:5px;align-items:center;cursor:pointer}
+label.found-cb input{width:18px;height:18px;accent-color:var(--done)}
+.note{background:var(--panel);border:1px dashed var(--line);border-radius:8px;padding:10px 14px;color:var(--muted);margin:14px 0}
+.note.warn{border-color:var(--red);color:var(--ink)}
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:0}
+ol.steps li{counter-increment:s;position:relative;padding:0 0 14px 44px}
+ol.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:30px;height:30px;border-radius:50%;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:bold}
+ol.steps li b{display:block}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px}
+table{border-collapse:collapse;width:100%;background:var(--panel)}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:#3a2a1e;color:var(--gold);font-weight:normal;text-transform:uppercase;font-size:.8rem;letter-spacing:.05em}
+td code{font-family:Consolas,Menlo,monospace;color:var(--gold)}
+ul{margin:0;padding-left:20px}li{margin-bottom:4px}
+a{color:var(--gold)}
+.empty{color:var(--muted);font-style:italic}
+.sources li{margin-bottom:6px}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:20px}
+@media (max-width:600px){body{font-size:15px}.cards{grid-template-columns:1fr}nav button{padding:6px 9px;font-size:.9rem}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Red Dead Redemption 2 Guide</h1>
+  <p>Story mode field guide: legendary animals, fish, treasure maps, secrets, tips and cheats.</p>
+  <div class="progress">
+    <span id="progText">0 / 0 found</span>
+    <div class="bar"><div id="progBar"></div></div>
+    <button class="btn reset" id="resetBtn">Reset progress</button>
+  </div>
+</header>
+<nav role="tablist" id="nav"></nav>
+<main>
+  <section class="tab" id="tab-animals">
+    <h2>Legendary Animals</h2>
+    <div class="controls"><div class="chips" id="animalRegions"></div><input type="search" id="animalSearch" placeholder="Search animal, place, or item (e.g. hat)"></div>
+    <div class="cards" id="animalCards"></div>
+    <div class="note">Take pelts to the Trapper (Saint Denis is the main shop). Several items need two legendary pelts, so check the crafts before you ride out.</div>
+    <h3>How legendary hunts work</h3>
+    <ol class="steps">
+      <li><b>Unlock the map</b>Finish Hosea's Chapter 2 mission Exit Pursued by a Bruised Ego to get the legendary animal map.</li>
+      <li><b>Enter the zone</b>Ride into the marked area. If it says there's too much activity, finish the nearby event and come back.</li>
+      <li><b>Follow clues with Eagle Eye</b>Inspect three clues (the Bear needs two); the last one leads you to the animal.</li>
+      <li><b>Kill it any way you like</b>A legendary always gives a perfect pelt, so bring your strongest rifle, Express ammo and full Dead Eye.</li>
+    </ol>
+    <div class="note">Legendaries don't respawn. If the body is lost (in water, off a cliff), the materials are sent to the Trapper and Fence automatically.</div>
+  </section>
+
+  <section class="tab" id="tab-fish">
+    <h2>Legendary Fish</h2>
+    <div class="note">Start the Stranger mission A Fisher of Fish with Jeremy Gill on the pier on Flat Iron Lake's northeast shore for the map.</div>
+    <div class="cards" id="fishCards"></div>
+  </section>
+
+  <section class="tab" id="tab-treasure">
+    <h2>Treasure Maps</h2>
+    <div class="controls"><div class="chips" id="huntPicker"></div></div>
+    <div id="huntDetail"></div>
+    <div class="note">Sell gold bars to any Fence for $500 each. The four main hunts alone pay 15 bars.</div>
+  </section>
+
+  <section class="tab" id="tab-secrets">
+    <h2>Secrets and Easter Eggs</h2>
+    <div class="controls"><div class="chips" id="secretRegions"></div><input type="search" id="secretSearch" placeholder="UFO, ghost, knife, Saint Denis..."></div>
+    <div class="cards" id="secretCards"></div>
+  </section>
+
+  <section class="tab" id="tab-tips">
+    <h2>Tips and Tricks</h2>
+    <div class="grid2">
+      <div class="card"><h3>Money early</h3><ul>
+        <li>Gold bars sell for $500 each at a Fence: do the Jack Hall, High Stakes, Poisonous Trail and Landmarks hunts early.</li>
+        <li>Free bars: one in the Limpany sheriff's office (south of Valentine), two in the upended car of the train wreck near Cotorra Springs.</li>
+        <li>Three more in the strange statues cave by the Mysterious Hill Home (statues with 2, 3, 5, 7 fingers; the armless one has 7).</li>
+        <li>Rob the Strawberry general store's basement still for a $50 wall stash.</li></ul></div>
+      <div class="card"><h3>Camp ledger</h3><ul>
+        <li>The ledger unlocks after Money Lending and Other Sins II in Chapter 2.</li>
+        <li>Buy Leather Working Tools ($225) for Pearson's satchels.</li>
+        <li>Buy Dutch's lodging ($220), then Arthur's lodging ($325) for the fast travel map in your tent.</li>
+        <li>Horse Station ($300) lets you swap or call horses at camp.</li></ul></div>
+      <div class="card"><h3>Hunting perfect pelts</h3>
+        <div class="tablewrap"><table><thead><tr><th>Animal size</th><th>Weapon</th></tr></thead><tbody>
+        <tr><td>Small game</td><td>Bow with Small Game Arrows</td></tr>
+        <tr><td>Moderate game</td><td>Varmint Rifle</td></tr>
+        <tr><td>Medium game</td><td>Repeater or bow</td></tr>
+        <tr><td>Large game</td><td>Rifle</td></tr>
+        <tr><td>Massive game</td><td>Scoped rifle, or bow with Improved Arrows</td></tr></tbody></table></div>
+        <p>Only 3-star animals give perfect pelts. Check the animal's info first and land one clean head or vital shot.</p></div>
+      <div class="card"><h3>Horses</h3><ul>
+        <li>Tame the free White Arabian near Lake Isabella, one of the best horses in the game. Save before you approach, then ride her to a stable.</li>
+        <li>Max your bond before Horseman challenges; petting restores stamina based on bond level.</li>
+        <li>The Rolling Block Rifle from Chapter 2's Pouring Forth Oil is ideal for legendaries.</li></ul></div>
+      <div class="card"><h3>Cores and Dead Eye</h3><ul>
+        <li>Completed challenge sets raise a core and your ammo capacity.</li>
+        <li>Save tonics for hard fights; chewing tobacco and moonshine cover routine top-ups.</li>
+        <li>At Dead Eye level 4 you can see animal weak points.</li></ul></div>
+      <div class="card"><h3>General</h3><ul>
+        <li>Do white Stranger missions before yellow story missions; some white ones disappear as the story moves.</li>
+        <li>Wear a bandana for robberies and swap outfits after.</li>
+        <li>Don't pick up worn weapons; they stay on your horse forever.</li>
+        <li>Stuck somewhere? Set camp to warp you and your horse to safety.</li></ul></div>
+    </div>
+  </section>
+
+  <section class="tab" id="tab-cheats">
+    <h2>Cheat Codes</h2>
+    <div class="note warn">Any active cheat disables saving and achievements. Enter them at the end of a session from Settings, then Cheats. Type them exactly, punctuation included.</div>
+    <div class="controls"><div class="chips" id="cheatPicker"></div></div>
+    <div class="tablewrap" id="cheatTable"></div>
+  </section>
+
+  <section style="margin-top:36px">
+    <h2>Sources</h2>
+    <ul class="sources" id="sources"></ul>
+  </section>
+</main>
+<footer>Progress is saved in this browser only. Fan-made guide; not affiliated with Rockstar Games.</footer>
+<script>
+const ANIMALS = [
+  { name: "Bharati Grizzly Bear", region: "Ambarino", where: "Clearing north of the lake at O'Creagh's Run, Grizzlies East", unlock: "Ch. 2, after Exit Pursued by a Bruised Ego (it escapes during the mission)", tip: "Tough and fights back. Express ammo to the heart ends it fast.", crafts: "Bear Head Hat; Bear Coat (+ Perfect Bison Pelt); Bear Ropers (+ Perfect Bull Hide)" },
+  { name: "Bighorn Ram", region: "Ambarino", where: "Hills north of the railroad, east of Cattail Pond (across the Dakota east of Valentine)", unlock: "Ch. 2", tip: "Not very strong. A weak-point shot with any rifle works.", crafts: "Ram Hat; Ram Batwing Chaps; Ram Rifleman Gloves (+ Perfect Boar Pelt)" },
+  { name: "White Bison", region: "Ambarino", where: "North shore of Lake Isabella, Grizzlies West", unlock: "Ch. 2", tip: "Rolling Block Rifle with Express ammo and precise shots.", crafts: "White Bison Hat; White Bison Coat" },
+  { name: "Wolf", region: "Ambarino", where: "In and around Cotorra Springs, southwest of Wapiti Reservation", unlock: "Ch. 2", tip: "Easy for a legendary. A weak-point rifle shot does it.", crafts: "Wolf Batwing Chaps (+ Perfect Goat Hide); Cougar and Wolf Vest (+ Legendary Cougar)" },
+  { name: "Beaver", region: "New Hanover", where: "Just southeast of Elysian Pool, due west of Van Horn Trading Post (Butcher Creek area)", unlock: "Ch. 2", tip: "Doesn't fight back. One shot from anything, even the bow.", crafts: "Beaver Cavalry Gloves; Beaver Flop Hat (+ Legendary Boar + Cardinal Feather)" },
+  { name: "Elk", region: "New Hanover", where: "Woods due east of Bacchus Station, northeast of Fort Wallace (Ambarino border)", unlock: "Ch. 2", tip: "Easy to spot, little fight. Rolling Block with Express ammo.", crafts: "Elk Range Gloves; Elk Half Chaps (+ Perfect Sheep Hide); Elk Moccasins (+ Perfect Goat Hide)" },
+  { name: "Moose", region: "New Hanover", where: "Far northeast corner: follow the tracks north from Annesburg or the river up from Brandywine Drop", unlock: "Ch. 2", tip: "Quick and tanky. Full Dead Eye, Express ammo, heart and neck.", crafts: "Moose Hunting Jacket (+ Perfect Wolf Pelt); Moose Moccasins (+ Perfect Cow Hide)" },
+  { name: "Buck", region: "West Elizabeth", where: "Black Bone Forest at the western foot of Mt. Shann, northwest of Strawberry", unlock: "Ch. 2", tip: "One Express shot to heart or head. Get it early: the Buck Antler trinket improves pelt quality.", crafts: "Buck Vest (+ Perfect Ram Hide); Buck and Fox Range Gloves (+ Legendary Fox)" },
+  { name: "Bullgator", region: "Lemoyne", where: "Swamps south of Lagras, west of Lakay, Bayou Nwa", unlock: "Later in the story (sources differ: Ch. 4 Country Pursuits or Ch. 5 That's Murfree Country)", tip: "One of the deadliest. Stay at long range with a Rolling Block Rifle.", crafts: "Alligator Gambler's Hat (+ 2 Perfect Snake Skins); Alligator Vest; Alligator Fowlers" },
+  { name: "Boar", region: "Lemoyne", where: "Northwest Bluewater Marsh, northern edge of Bayou Nwa", unlock: "Ch. 2", tip: "Charges right away. Springfield Rifle, or a poison arrow and wait.", crafts: "Boar and Bison Fowlers (+ Legendary Tatanka Bison); Beaver Flop Hat" },
+  { name: "Coyote", region: "Lemoyne", where: "West end of Dewberry Creek, northwest of Rhodes, Scarlett Meadows", unlock: "Ch. 2", tip: "Runs as soon as it spots you. One well-placed Rolling Block shot.", crafts: "Coyote Mountain Hat (+ 2 Eagle Feathers); Coyote Half Chaps (+ 2 Perfect Fox Pelts)" },
+  { name: "Fox", region: "Lemoyne", where: "Just east of Mattock Pond, north of Rhodes", unlock: "Ch. 2", tip: "Flees once it smells you. Approach downwind and don't miss.", crafts: "Fox Moccasins (+ Perfect Elk Pelt); Buck and Fox Range Gloves" },
+  { name: "Giaguaro Panther", region: "Lemoyne", where: "Woods south of Bolger Glade, west of Shady Belle", unlock: "After Master Hunter challenge 9", tip: "Hardest hunt: very fast and strong. Best rifle, best ammo, full Dead Eye.", crafts: "Panther Cloak; Panther Range Gloves (+ Perfect Gila Monster Skin)" },
+  { name: "Cougar", region: "New Austin", where: "West of Tumbleweed, Gaptooth Ridge", unlock: "Epilogue", tip: "Fast and aggressive. Use Cover Scent, Dead Eye with a scoped rifle, shotgun if it charges.", crafts: "Cougar Flop Hat (+ 2 Turkey Feathers); Cougar Riding Gloves (+ Perfect Boar Pelt); Cougar and Wolf Vest" },
+  { name: "Pronghorn", region: "New Austin", where: "East and slightly south of Fort Mercer, near Rio del Lobo Rock, Rio Bravo", unlock: "Epilogue", tip: "Very alert and skittish but weak. One weak-point shot.", crafts: "Pronghorn Coat (+ Perfect Moose Pelt); Pronghorn Range Gloves (+ Perfect Muskrat Pelt)" },
+  { name: "Tatanka Bison", region: "New Austin", where: "Hennigan's Stead, south of Stillwater Creek", unlock: "Epilogue", tip: "May bolt once shot. Paint several marks in Dead Eye.", crafts: "Bison Vest; Bison Batwing Chaps; Boar and Bison Fowlers" }
+];
+const FISH = [
+  ["Bluegill", "South of Clemens Point, Flat Iron Lake", "Lake"],
+  ["Catfish", "Creek deltas west of Sisika Penitentiary", "River"],
+  ["Chain Pickerel", "Dakota River, northwest of Flatneck Station", "River"],
+  ["Gar", "Swamp between Lakay and Lagras, Bayou Nwa", "Swamp"],
+  ["Largemouth Bass", "San Luis River shore, southeast of Lake Don Julio", "River"],
+  ["Muskie", "By the lighthouse, south end of Van Horn Trading Post", "River"],
+  ["Perch", "Elysian Pool, southwest of Annesburg", "Lake"],
+  ["Redfin Pickerel", "Largest pool of Stillwater Creek, New Austin", "Lake"],
+  ["Rock Bass", "Aurora Basin, west of Manzanita Post", "Lake"],
+  ["Salmon", "Lake Isabella, Grizzlies West", "Lake"],
+  ["Smallmouth Bass", "Lake Owanjila, west of Strawberry", "Lake"],
+  ["Sturgeon", "Railroad bridge at the mouth of the Lannahechee, between Saint Denis and Rhodes", "River"],
+  ["Steelhead Trout", "Basin far north of Annesburg, up the Kamassa from Brandywine Drop", "River"]
+];
+const HUNTS = [
+  { id: "jack", label: "Jack Hall Gang", start: "Buy from Maximo on the ridge northwest of Flatneck Station (or loot him). A Fence sells it if you miss him.", when: "Chapter 2", reward: "2 gold bars", steps: [
+    ["Caliban's Seat, south of Valentine", "Climb from the east side, follow the ledges to white granite with a small hole. Map 2 inside."],
+    ["Cotorra Springs, Ambarino", "West end of the springs, inside the central stack of a small rock circle. Legendary Wolf roams here."],
+    ["O'Creagh's Run lake, Grizzlies East", "Under a rock on the small island in the middle of the lake. Treasure."]]},
+  { id: "stakes", label: "High Stakes", start: "Take it from an old treasure hunter (rob, hogtie, or bump him) often seen on a big rock northeast of Riggs Station; a Fence sells it if you keep missing him.", when: "Random encounter", reward: "3 gold bars", steps: [
+    ["Cumberland Falls, west of Valentine", "Swim to the south rocks, climb the fallen tree and go behind the falls."],
+    ["Barrow Lagoon, Grizzlies West", "On the frozen lagoon, in the knot of the log bridging the island and the bank."],
+    ["Rock formation northeast of Fort Wallace", "Go up the back, down between the peaks, follow the ledge and crouch under the overhang. Treasure."]]},
+  { id: "poison", label: "Poisonous Trail", start: "Lock box under the bed in Cairn Lake Lodge, southeast of Colter.", when: "Any time you can reach Colter", reward: "4 gold bars", steps: [
+    ["Face Rock, Scarlett Meadows", "Northwest of Hill Haven Ranch. Go right past a tree and down a slope; hole at the base of the withered trunk."],
+    ["Snake geoglyph, west of Van Horn", "Climb the abandoned tower south of the road, then search the rock mound in the snake's head."],
+    ["Cave behind Elysian Pool waterfall", "Dive through the falls, drop into the pit, crawl through, go right, jump to the lower ledge. Rock pile at the end."]]},
+  { id: "riches", label: "Landmarks of Riches", start: "Behind the plaque on the west side of the Obelisk, northwest of Lake Owanjila (Big Valley).", when: "Any time", reward: "6 gold bars ($3,000)", steps: [
+    ["Tiny Church, east of Lakay", "Climb the roof and search the bell tower."],
+    ["Mysterious Hill Home, east of Donner Falls", "Climb the turtle-painted roof and search the broken window."],
+    ["Bolger Glade, south of Rhodes", "Tree stump surrounded by trenches near the south edge."],
+    ["Sundial on Mt. Shann", "Within sight of the Obelisk. The rock at the 7 o'clock position hides the treasure."]]},
+  { id: "elemental", label: "Elemental Trail", start: "Corpse hanging by a rope off a cliff on the Sea of Coronado shore, southwest of Tumbleweed. Shoot the rope, loot him.", when: "Epilogue", reward: "1 gold bar, Crow's Beak trinket, horse medicine", steps: [
+    ["Greenhollow, east of Lake Don Julio", "Search the fireplace in the ruined house."],
+    ["Benedict Point flume", "Get on the water flume from the top of the hill and search about halfway down."],
+    ["Coot's Chapel, southeast of Armadillo", "Cemetery left of the chapel: rock on the wooden-cross grave under a tree."]]},
+  { id: "torn", label: "Torn Treasure (Otis Miller)", start: "Two map halves, each in a drawer at a hermit's home. Order doesn't matter.", when: "Lead only after the Epilogue", reward: "Otis Miller's Revolver", steps: [
+    ["Male hermit, Manito Glade", "North of Annesburg. Hostile; his Rare Shotgun is in the house too."],
+    ["Female hermit, West Elizabeth", "Far northwest of Wallace Station up Little Creek River; she sets three dogs on you."],
+    ["Cave near Rattlesnake Hollow", "Northwest of Armadillo by the state line. Treasure chest inside."]]}
+];
+const SECRETS = [
+  ["UFO at Hani's Bethel", "New Hanover", "Cult shack by a pond north of Emerald Station", "Read the note inside, then be there around 2 AM under a half moon."],
+  ["UFO over Mt. Shann", "West Elizabeth", "Rock circle at the top of Mt. Shann, north of Strawberry", "Stand in the circle around 2 AM with a half moon. Binoculars help."],
+  ["Bigfoot skeleton", "West Elizabeth", "Mt. Shann summit trail", "Near the top, take the path left behind the foliage to a small cave."],
+  ["Talking Bigfoot", "Ambarino", "River north of Donner Falls", "Study 30+ animal species, then follow strange birds to a rock-covered cave. Return after 3 days for more."],
+  ["Strange Man's cabin", "Lemoyne", "Near Mattock Pond, north of Rhodes", "Only his hat at first. At 100% completion the portrait is finished and he appears in the mirror."],
+  ["Vampire of Saint Denis", "Lemoyne", "Saint Denis back alleys", "Inspect 5 wall writings, an X appears; go around midnight. Loot the Ornate Dagger."],
+  ["Ghost train", "Lemoyne", "South of Old Greenbank Mill, by the Lemoyne sign on the railway", "Wait there around 3 AM. A nervous horse means it's coming."],
+  ["Bayou ghost lady", "Lemoyne", "North of Lagras, Bluewater Marsh", "Visit at night; watch with binoculars. She vanishes if you get close."],
+  ["Night Folk", "Lemoyne", "Bluewater Marsh at night", "Inspect a hanging body or a crying woman and they ambush you."],
+  ["Viking burial site", "New Hanover", "North of Annesburg, Roanoke Valley", "Viking Hatchet at the tomb; Viking Helmet in the cave below."],
+  ["Meteor House", "New Hanover", "Just north of the Viking tomb", "Grab the Meteorite (10% heat resistance). Meteor shower around 2 AM in the field to the west."],
+  ["Feral wolf man", "New Hanover", "North of Annesburg, Roanoke Ridge", "Follow the howling to his cave; his wolves attack."],
+  ["Man-made mutant", "New Hanover", "Abandoned house east of Van Horn Trading Post", "Climb the wagon to the roof and enter the 2nd-floor window."],
+  ["Serial killer (American Dreams)", "New Hanover", "Murder scenes around the map", "Stranger mission: find 3 scenes with map pieces to his hideout, then take him to the Valentine sheriff."],
+  ["Strange statues gold", "Ambarino", "Cave near the Mysterious Hill Home, northeast of Bacchus Bridge", "Sketch the Window Rock painting first, then press the statues with 2, 3, 5 and 7 fingers. 3 gold bars."],
+  ["Mysterious Hill Home", "Ambarino", "East of Donner Falls and Bacchus Bridge", "Hobbit-style house with a turtle symbol. Can't go in."],
+  ["Woman in a barrel", "Ambarino", "Foot of Donner Falls near Bacchus Bridge", "Inspect the barrel."],
+  ["Frozen couple and panoramic map", "Ambarino", "Hills above Lake Isabella, northwest of Mt. Hagen", "Loot the panoramic map they hold; matching carvings sit near the Mt. Shann peak."],
+  ["Mammoth skeleton", "Ambarino", "Near Deadboot Creek, northwest Ambarino", "Inspect it for a journal entry."],
+  ["Dead bear hunter", "West Elizabeth", "Northwest Big Valley near Hanging Dog Ranch", "Pull the rare Antler Knife from the bear's neck."],
+  ["Time traveller", "West Elizabeth", "Cabin northwest of Strawberry, west of Hawks Eye Creek", "Francis Sinclair starts Geology for Beginners: find 10 rock carvings and mail them."],
+  ["Pagan ritual site", "West Elizabeth", "Northwest of Owanjila Dam, Big Valley", "Take the Pagan Skull Mask off the staked corpse."],
+  ["Two-headed woman", "West Elizabeth", "Circus wagons outside Manzanita Post", "Look inside the Twin Beauties wagon."],
+  ["Devil's cave hermit", "West Elizabeth", "Cave at the far west of West Elizabeth", "Talk to him; return every 3 days for more of his story."],
+  ["Strawberry moonshine still", "West Elizabeth", "Under the Strawberry general store", "Peek through the basement window, then rob the owner for a $50 stash."],
+  ["Blackwater Aztec glyphs", "West Elizabeth", "Six walls around Blackwater", "Epilogue only. Spells out an Undead Nightmare message."],
+  ["Braithwaite outhouse", "Lemoyne", "Shoreline southwest of Braithwaite Manor", "Inspect the chained outhouse (a woman is locked inside)."],
+  ["Pleasance plague town", "Lemoyne", "Just east of Bluewater Marsh", "Doors read STAY OUT PLAGUE; check the graveyard."],
+  ["Aberdeen Pig Farm", "Lemoyne", "Northwest of Bluewater Marsh", "Don't take the drink or the stew: they poison and rob you."],
+  ["Rhodes gunsmith basement", "Lemoyne", "Side of the Rhodes gunsmith", "Hear the boy, then hold up the gunsmith. Free Lancaster Repeater in a chest."],
+  ["Pirate boat", "Lemoyne", "Islands southeast of Rhodes, south of Caliga Hall", "Swim out for the Broken Pirate Sword (watch for gators)."],
+  ["Robot (A Bright Bouncing Boy)", "Lemoyne", "Saint Denis park, then a lab at Doverhill", "Ch. 4+ after The Joys of Civilization; find Marko Dragic 6 AM to 6 PM."],
+  ["Donkey Lady", "New Austin", "Two Crows, southwest of Armadillo", "Inspect the horse mill."],
+  ["Jesuit missionary", "New Austin", "Ledges by the Sea of Coronado, far southwest", "Epilogue. Climb up and read the 1797 letter."]
+];
+const CHEATS = [
+  ["Greed is now a virtue", "$500"],["You want more than you have", "Superior Arabian horse"],["Run! Run! Run!", "Racehorse"],["Be greedy only for foresight", "Infinite Dead Eye"],["Seek all the bounty of this place", "Raises Health, Stamina, Dead Eye"],["You flourish before you die", "Fills all meters"],["Eat of knowledge", "All crafting recipes"],["Share", "All camp upgrades"],["Vanity. All is vanity", "All outfits"],["A simple life, a beautiful death", "Basic weapons"],["Death is silence", "Stealth weapons"],["History is written by fools", "Gunslinger weapons"],["My kingdom is a horse", "More horse bonding"],["Better than my dog", "Call horse from any range"],["Balance. All is balance", "Neutral honor"],["You want freedom", "Drops wanted level"],["You want everyone to go away", "Clears bounties"],["A fool on command", "Makes you drunk"]
+];
+const PAPER_CHEATS = [
+  ["Abundance is the dullest desire", "Infinite ammo", "New Hanover Gazette #27, Ch. 1 on"],["Greed is American virtue", "Heavy weapons", "Saint Denis Times #46"],["You long for sight and see nothing", "Removes map fog", "Saint Denis Times #47"],["Virtue unearned is not virtue", "Max honor", "Saint Denis Times #48, Ch. 4"],["The lucky be strong evermore", "Infinite stamina", "Saint Denis Times #49, after Ch. 5"],["You seek more than the world offers", "Fills and fortifies cores", "Saint Denis Times #52, Ch. 6"],["You are a beast built for war", "War horse", "Saint Denis Times #53, Epilogue"],["Would you be happier as a clown?", "Circus wagon", "Saint Denis Times #54, Epilogue"]
+];
+const SOURCES = [
+  ["Legendary Animals and Fish Locations","IGN","https://www.ign.com/wikis/red-dead-redemption-2/Legendary_Animals"],
+  ["Treasure Maps","IGN","https://www.ign.com/wikis/red-dead-redemption-2/Treasure_Maps"],
+  ["Legendary Animals Guide","RDR2.org","https://www.rdr2.org/guides/legendary-animals-locations-guide/"],
+  ["Legendary animals: unlocks and tracking","GameNavi","https://gamenavi.net/red-dead-redemption-2/guides/legendary-animals/"],
+  ["Legendary animal hunts","PCGamesN","https://www.pcgamesn.com/red-dead-redemption-2/rdr2-legendary-animals-hunts"],
+  ["Trapper legendary pelt crafts","rdr2.wiki","https://rdr2.wiki/trapper"],
+  ["Elemental Trail Treasure Hunt","RDR2.org","https://www.rdr2.org/guides/elemental-trail-treasure-hunt/"],
+  ["Easter Eggs (pages 1 to 4)","RDR2.org","https://www.rdr2.org/wiki/easter-eggs/"],
+  ["Best RDR2 easter eggs","PC Gamer","https://www.pcgamer.com/red-dead-redemption-2-rdr2-secrets-easter-eggs-ufo-vampire/"],
+  ["All RDR2 cheats","PCGamesN","https://www.pcgamesn.com/red-dead-redemption-2/rdr2-cheats-pc"],
+  ["Camp upgrade order and prices","Pixel Twelve","https://pixeltwelve.com/articles/red-dead-redemption-2-camp-upgrades"],
+  ["Gold, money and statue puzzle","Schwoby's RDR2 Guide","https://rdr2.kurtschwob.com/financing.html"],
+  ["RDR2 tips","GitHub (celdorwow)","https://github.com/celdorwow/rdr2-tips"],
+  ["Perfect Pelts guide","Polygon","https://www.polygon.com/red-dead-redemption-2-guide/2018/11/19/18099106/rdr2-perfect-pelts-hunting/"]
+];
+
+(function(){
+  "use strict";
+  var REGIONS=["All","Ambarino","New Hanover","Lemoyne","West Elizabeth","New Austin"];
+  var KEY="rdr2-guide-found-v1";
+  var found={};
+  try{found=JSON.parse(localStorage.getItem(KEY)||"{}")||{};}catch(e){found={};}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(found));}catch(e){}}
+  function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+  function $(id){return document.getElementById(id);}
+  var allIds=[];
+  ANIMALS.forEach(function(a){allIds.push("a:"+a.name);});
+  FISH.forEach(function(f){allIds.push("f:"+f[0]);});
+  HUNTS.forEach(function(h){allIds.push("t:"+h.id);});
+  SECRETS.forEach(function(s){allIds.push("s:"+s[0]);});
+  function updateProgress(){
+    var n=allIds.filter(function(id){return found[id];}).length;
+    $("progText").textContent=n+" / "+allIds.length+" found";
+    $("progBar").style.width=(100*n/allIds.length)+"%";
+    document.querySelectorAll("[data-count]").forEach(function(el){
+      var p=el.getAttribute("data-count");var ids=allIds.filter(function(i){return i.indexOf(p)===0;});
+      el.textContent=" ("+ids.filter(function(i){return found[i];}).length+"/"+ids.length+")";
+    });
+  }
+  function cb(id){return '<label class="found-cb"><input type="checkbox" data-id="'+esc(id)+'"'+(found[id]?" checked":"")+'> Found it</label>';}
+  document.addEventListener("change",function(e){
+    var t=e.target;if(t&&t.matches&&t.matches("input[data-id]")){
+      var id=t.getAttribute("data-id");if(t.checked)found[id]=true;else delete found[id];save();
+      var card=t.closest(".card");if(card)card.classList.toggle("found",t.checked);updateProgress();}
+  });
+  // tabs
+  var TABS=[["animals","Legendary Animals","a:"],["fish","Legendary Fish","f:"],["treasure","Treasure Maps","t:"],["secrets","Secrets","s:"],["tips","Tips",null],["cheats","Cheats",null]];
+  $("nav").innerHTML=TABS.map(function(t){return '<button role="tab" data-tab="'+t[0]+'">'+t[1]+(t[2]?'<span data-count="'+t[2]+'"></span>':"")+'</button>';}).join("");
+  function showTab(name){
+    TABS.forEach(function(t){$("tab-"+t[0]).classList.toggle("active",t[0]===name);});
+    document.querySelectorAll("nav button").forEach(function(b){b.setAttribute("aria-selected",b.getAttribute("data-tab")===name?"true":"false");});
+    try{history.replaceState(null,"","#"+name);}catch(e){}
+  }
+  $("nav").addEventListener("click",function(e){var b=e.target.closest("button");if(b)showTab(b.getAttribute("data-tab"));});
+  function match(q,fields){q=q.trim().toLowerCase();if(!q)return true;return fields.some(function(f){return String(f).toLowerCase().indexOf(q)>=0;});}
+  function chips(el,opts,cur,onPick){
+    el.innerHTML=opts.map(function(o){return '<button class="chip'+(o.v===cur?" on":"")+'" data-v="'+esc(o.v)+'">'+esc(o.l)+'</button>';}).join("");
+    el.onclick=function(e){var b=e.target.closest("button");if(b)onPick(b.getAttribute("data-v"));};
+  }
+  function regionOpts(list,getR){return REGIONS.map(function(r){var c=r==="All"?list.length:list.filter(function(x){return getR(x)===r;}).length;return {v:r,l:r+" ("+c+")",c:c};}).filter(function(o){return o.c>0;});}
+  // animals
+  var aR="All";
+  function renderAnimals(){
+    chips($("animalRegions"),regionOpts(ANIMALS,function(a){return a.region;}),aR,function(v){aR=v;renderAnimals();});
+    var q=$("animalSearch").value;
+    var list=ANIMALS.filter(function(a){return (aR==="All"||a.region===aR)&&match(q,[a.name,a.where,a.region,a.crafts,a.unlock,a.tip]);});
+    $("animalCards").innerHTML=list.length?list.map(function(a){var id="a:"+a.name;return '<div class="card'+(found[id]?" found":"")+'"><div class="top"><div><h4>Legendary '+esc(a.name)+'</h4><span class="tag">'+esc(a.region)+'</span></div>'+cb(id)+'</div><dl><dt>Where</dt><dd>'+esc(a.where)+'</dd><dt>Unlocks</dt><dd>'+esc(a.unlock)+'</dd><dt>How to hunt it</dt><dd>'+esc(a.tip)+'</dd><dt>Trapper crafts</dt><dd>'+esc(a.crafts)+'</dd></dl></div>';}).join(""):'<p class="empty">No animals match that search.</p>';
+  }
+  $("animalSearch").addEventListener("input",renderAnimals);
+  // fish
+  function renderFish(){
+    $("fishCards").innerHTML=FISH.map(function(f){var id="f:"+f[0];return '<div class="card'+(found[id]?" found":"")+'"><div class="top"><div><h4>Legendary '+esc(f[0])+'</h4><span class="tag">Special '+esc(f[2])+' Lure</span></div>'+cb(id)+'</div><dl><dt>Where</dt><dd>'+esc(f[1])+'</dd></dl></div>';}).join("");
+  }
+  // treasure
+  var hunt=HUNTS[0].id;
+  function renderHunt(){
+    chips($("huntPicker"),HUNTS.map(function(h){return {v:h.id,l:(found["t:"+h.id]?"\u2713 ":"")+h.label};}),hunt,function(v){hunt=v;renderHunt();});
+    var h=HUNTS.filter(function(x){return x.id===hunt;})[0]||HUNTS[0];var id="t:"+h.id;
+    $("huntDetail").innerHTML='<div class="grid2"><div class="card'+(found[id]?" found":"")+'"><div class="top"><h3>'+esc(h.label)+'</h3>'+cb(id)+'</div><dl><dt>First map</dt><dd>'+esc(h.start)+'</dd><dt>Available</dt><dd>'+esc(h.when)+'</dd><dt>Reward</dt><dd>'+esc(h.reward)+'</dd></dl></div><div class="card"><h3>Clues in order</h3><ol class="steps">'+h.steps.map(function(s){return '<li><b>'+esc(s[0])+'</b>'+esc(s[1])+'</li>';}).join("")+'</ol></div></div>';
+  }
+  document.addEventListener("change",function(e){if(e.target&&e.target.getAttribute&&String(e.target.getAttribute("data-id")).indexOf("t:")===0)renderHunt();});
+  // secrets
+  var sR="All";
+  function renderSecrets(){
+    chips($("secretRegions"),regionOpts(SECRETS,function(s){return s[1];}),sR,function(v){sR=v;renderSecrets();});
+    var q=$("secretSearch").value;
+    var list=SECRETS.filter(function(s){return (sR==="All"||s[1]===sR)&&match(q,s);});
+    $("secretCards").innerHTML=list.length?list.map(function(s){var id="s:"+s[0];return '<div class="card'+(found[id]?" found":"")+'"><div class="top"><div><h4>'+esc(s[0])+'</h4><span class="tag">'+esc(s[1])+'</span></div>'+cb(id)+'</div><dl><dt>Where</dt><dd>'+esc(s[2])+'</dd><dt>How to find it</dt><dd>'+esc(s[3])+'</dd></dl></div>';}).join(""):'<p class="empty">No secrets match that search.</p>';
+  }
+  $("secretSearch").addEventListener("input",renderSecrets);
+  // cheats
+  var cv="menu";
+  function renderCheats(){
+    chips($("cheatPicker"),[{v:"menu",l:"Always available"},{v:"paper",l:"From newspapers"}],cv,function(v){cv=v;renderCheats();});
+    var rows=cv==="menu"?CHEATS:PAPER_CHEATS;
+    var head=cv==="menu"?["Type exactly","Effect"]:["Type exactly","Effect","Newspaper to buy"];
+    $("cheatTable").innerHTML='<table><thead><tr>'+head.map(function(h){return "<th>"+h+"</th>";}).join("")+'</tr></thead><tbody>'+rows.map(function(r){return "<tr>"+r.map(function(c,i){return "<td>"+(i===0?"<code>"+esc(c)+"</code>":esc(c))+"</td>";}).join("")+"</tr>";}).join("")+'</tbody></table>';
+  }
+  $("sources").innerHTML=SOURCES.map(function(s){return '<li><a href="'+esc(s[2])+'" target="_blank" rel="noopener">'+esc(s[0])+'</a> &middot; '+esc(s[1])+'</li>';}).join("");
+  $("resetBtn").addEventListener("click",function(){if(confirm("Clear all 'Found it' progress?")){found={};save();renderAll();}});
+  function renderAll(){renderAnimals();renderFish();renderHunt();renderSecrets();renderCheats();updateProgress();}
+  renderAll();
+  var start=(location.hash||"").slice(1);
+  showTab(TABS.some(function(t){return t[0]===start;})?start:"animals");
+})();
+</script>
+</body>
+</html>
